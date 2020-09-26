@@ -122,6 +122,7 @@ export default {
   created() {
     this.getUserList();
   },
+
   data() {
     return {
       //查询信息实体
@@ -171,6 +172,7 @@ export default {
       },
     };
   },
+  
   methods: {
     //获取所有用户
     async getUserList() {
