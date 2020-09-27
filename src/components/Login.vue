@@ -8,10 +8,10 @@
             </div>
 
             <!-- 表单组件 -->
-            <el-form ref="loginFormRef" :rules="loginRules" :model="loginForm" class="login_form" label-width="0px">
+            <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login_form" label-width="0px">
                 <!-- 用户名 -->
                 <el-form-item prop="username">
-                    <el-input v-model="loginForm.username" prefix-icon="iconfont icon-denglu"></el-input>
+                    <el-input v-model="loginForm.username" prefix-icon="iconfont icon-denglu" @blur="usernameRules()"></el-input>
                 </el-form-item>
 
                 <!-- 密码 -->
@@ -35,8 +35,8 @@ export default {
         return{
             //表单数据对象
             loginForm: {
-                username:"admin",
-                password:"123456"
+                username:"admin",//admin
+                password:"123456"//123456
             },
             //验证对象
             loginRules: {
@@ -54,9 +54,13 @@ export default {
         };
     },
     methods: {
-        //重置表单内容
-        resetLoginForm(){
-            this.$refs.loginFormRef.resetFields();
+        usernameRules(){
+            this.$refs.loginFormRef.validate(async valid =>{
+                if( !valid ) return;//验证失败
+                const {data:res} = await this.$http.post("usernamerules?username=" + this.loginForm.username);//访问后台
+                if( res.flag != "success") this.$message.error("用户名不存在！！！");//信息提示
+                
+            })
         },
         //登录方法
         login(){
@@ -65,13 +69,17 @@ export default {
                 if( !valid ) return;//验证失败
                 const {data:res} = await this.$http.post("login",this.loginForm);//访问后台
                 if( res.flag == "ok"){//成功
-                    this.$message.success("操作成功！！！");//信息提示
+                    this.$message.success("登录成功！！！");//信息提示
                     window.sessionStorage.setItem("user",res.user);//存储user对象
                     this.$router.push({path:"/home"});//页面路由跳转
                 }else{//失败
-                    this.$message.error("操作失败！！！");//错误提示
+                    this.$message.error("登录失败！！！");//错误提示
                 }
             })
+        },
+        //重置表单内容
+        resetLoginForm(){
+            this.$refs.loginFormRef.resetFields();//clearValidate() 仅清空校验；resetFields() 不仅清空校验，还重置字段值
         },
     },
 }
