@@ -21,8 +21,10 @@
 
                 <!-- 按钮 -->
                 <el-form-item class="btns">
-                     <el-button type="primary" @click="login()">登录</el-button>
-                     <el-button type="info" @click="resetLoginForm()">重置</el-button>
+                    <!-- <el-button type="success" @click="$router.push('/register')">注册</el-button> -->
+                    <el-button type="primary" @click="login()">登录</el-button>
+                    <el-button type="success" @click="register()">注册</el-button>
+                    <el-button type="info" @click="resetLoginForm()">重置</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -43,7 +45,8 @@ export default {
                 //校验用户名
                 username:[
                     { required: true, message: '用户名为必填项', trigger: 'blur' },//必填项验证
-                    { min: 5, max: 12, message: '长度在 5 到 12 个字符', trigger: 'blur' }//长度验证
+                    { min: 5, max: 12, message: '长度在 5 到 12 个字符', trigger: 'blur' },//长度验证
+                    { required: true, pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9.·-]+$/, message: '姓名不支持特殊字符', trigger: 'blur' },
                 ],
                 //校验密码
                 password:[
@@ -60,6 +63,13 @@ export default {
                 const {data:res} = await this.$http.post("usernamerules?username=" + this.loginForm.username);//访问后台
                 if( res.flag != "success") this.$message.error("用户名不存在！！！");//信息提示
                 
+            })
+        },
+        //跳转到注册页面
+        register(){
+            this.$refs.loginFormRef.validate(valid =>{
+                this.$message.success("欢迎来到注册页面！！！");//信息提示
+                this.$router.push({path: "/register"});//页面路由跳转
             })
         },
         //登录方法
@@ -79,6 +89,7 @@ export default {
         },
         //重置表单内容
         resetLoginForm(){
+            this.$message.success("重置成功！！！");
             this.$refs.loginFormRef.resetFields();//clearValidate() 仅清空校验；resetFields() 不仅清空校验，还重置字段值
         },
     },

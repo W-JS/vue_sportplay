@@ -8,6 +8,14 @@ import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 //引入UserList组件
 import UserList from '../components/admin/UserList.vue'
+//引入Register组件
+import Register from '../components/Register.vue'
+//引入Test1组件
+import Test1 from '../components/test/Test1.vue'
+//引入Test2组件
+import Test2 from '../components/test/Test2.vue'
+//引入Test3组件
+import Test3 from '../components/test/Test3.vue'
 
 Vue.use(VueRouter)
 
@@ -19,6 +27,22 @@ const routes = [
   {
     path: "/login",
     component: Login
+  },
+  {
+    path: "/register",
+    component: Register
+  },
+  {
+    path: "/test1",
+    component: Test1
+  },
+  {
+    path: "/test2",
+    component: Test2
+  },
+  {
+    path: "/test3",
+    component: Test3
   },
   {
     path: "/home",
@@ -56,7 +80,7 @@ router.beforeEach((to, from, next) => {
   if (to.path == '/login') return next();//访问首页就放行
   //获取user
   const userFlag = window.sessionStorage.getItem("user");//取出当前用户
-  if (!userFlag) return next('/login');//无值，返回登录页
+  if (!userFlag) return next();//无值，返回登录页 next() or next('/login');
   next();//符合要求 放行
 })
 
