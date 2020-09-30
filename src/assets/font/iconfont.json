@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17164676",
+      "name": "年龄广泛",
+      "font_class": "nianling",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
       "icon_id": "2506215",
       "name": "邮箱",
       "font_class": "youxiang",

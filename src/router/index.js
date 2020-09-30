@@ -10,6 +10,8 @@ import Welcome from '../components/Welcome.vue'
 import UserList from '../components/admin/UserList.vue'
 //引入Register组件
 import Register from '../components/Register.vue'
+//引入Test组件
+import Test from '../components/test/Test.vue'
 //引入Test1组件
 import Test1 from '../components/test/Test1.vue'
 //引入Test2组件
@@ -31,6 +33,10 @@ const routes = [
   {
     path: "/register",
     component: Register
+  },
+  {
+    path: "/test",
+    component: Test
   },
   {
     path: "/test1",
